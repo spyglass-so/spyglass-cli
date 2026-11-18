@@ -35,3 +35,6 @@ install-updater = false
 default-features = false
 features = ["rustls"]
 macos-sign = true
+
+[dist.github-custom-runners]
+aarch64-apple-darwin = "macos-15"
