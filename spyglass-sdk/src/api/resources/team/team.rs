@@ -18,7 +18,7 @@ impl TeamClient {
     /// `remainingCredits` and not `planCredits`.
     ///
     /// Limited to 60 requests per minute per user.
-    /// This call is free and does not use credits. It still responds when
+    /// This call is free and does not consume credits. It still responds when
     /// the team is out of credits.
     ///
     /// # Arguments

@@ -35,7 +35,7 @@ use spyglass_sdk::api::*;
 pub fn register(app: CliApp) -> CliApp {
     let app = app.command(
         clap::Command::new("get")
-            .about("Get one account")
+            .about("Get account")
             .arg(clap::Arg::new("id").required(true))
         ,
         |matches, ctx| {

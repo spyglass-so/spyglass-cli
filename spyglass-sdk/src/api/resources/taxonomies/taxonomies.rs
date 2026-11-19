@@ -18,7 +18,7 @@ impl TaxonomiesClient {
     /// such as `Apparel > Footwear > Sneakers`.
     ///
     /// Limited to 120 requests per minute per user.
-    /// This call is free and does not use credits.
+    /// This call is free and does not consume credits.
     ///
     /// # Arguments
     ///

@@ -19,7 +19,7 @@ impl AgentClient {
     /// `count` is the number of runs in this response. Stop when `count` is less than `limit`.
     ///
     /// Limited to 120 requests per minute per user.
-    /// This call is free and does not use credits.
+    /// This call is free and does not consume credits.
     ///
     /// # Arguments
     ///
