@@ -9,6 +9,8 @@ pub enum InsightsAccountRequestType {
     TargetPersona,
     AdAngle,
     MediaMix,
+    Category,
+    Funnel,
     /// This variant is used for forward compatibility.
     /// If the server sends a value not recognized by the current SDK version,
     /// it will be captured here with the raw string value.
@@ -21,6 +23,8 @@ impl Serialize for InsightsAccountRequestType {
             Self::TargetPersona => serializer.serialize_str("TARGET_PERSONA"),
             Self::AdAngle => serializer.serialize_str("AD_ANGLE"),
             Self::MediaMix => serializer.serialize_str("MEDIA_MIX"),
+            Self::Category => serializer.serialize_str("CATEGORY"),
+            Self::Funnel => serializer.serialize_str("FUNNEL"),
             Self::__Unknown(val) => serializer.serialize_str(val),
         }
     }
@@ -34,6 +38,8 @@ impl<'de> Deserialize<'de> for InsightsAccountRequestType {
             "TARGET_PERSONA" => Ok(Self::TargetPersona),
             "AD_ANGLE" => Ok(Self::AdAngle),
             "MEDIA_MIX" => Ok(Self::MediaMix),
+            "CATEGORY" => Ok(Self::Category),
+            "FUNNEL" => Ok(Self::Funnel),
             _ => Ok(Self::__Unknown(value)),
         }
     }
@@ -46,6 +52,8 @@ impl fmt::Display for InsightsAccountRequestType {
             Self::TargetPersona => write!(f, "TARGET_PERSONA"),
             Self::AdAngle => write!(f, "AD_ANGLE"),
             Self::MediaMix => write!(f, "MEDIA_MIX"),
+            Self::Category => write!(f, "CATEGORY"),
+            Self::Funnel => write!(f, "FUNNEL"),
             Self::__Unknown(val) => write!(f, "{}", val),
         }
     }

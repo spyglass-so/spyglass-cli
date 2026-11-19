@@ -12,12 +12,14 @@ pub struct CollabsQueryRequest {
     #[serde(rename = "datePreset")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub date_preset: Option<CollabsAccountRequestDatePreset>,
+    /// Calendar date, YYYY-MM-DD.
     #[serde(rename = "startDate")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub start_date: Option<String>,
+    pub start_date: Option<NaiveDate>,
+    /// Calendar date, YYYY-MM-DD.
     #[serde(rename = "endDate")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub end_date: Option<String>,
+    pub end_date: Option<NaiveDate>,
 }
 
 impl CollabsQueryRequest {
@@ -32,8 +34,8 @@ pub struct CollabsQueryRequestBuilder {
     limit: Option<i64>,
     offset: Option<i64>,
     date_preset: Option<CollabsAccountRequestDatePreset>,
-    start_date: Option<String>,
-    end_date: Option<String>,
+    start_date: Option<NaiveDate>,
+    end_date: Option<NaiveDate>,
 }
 
 impl CollabsQueryRequestBuilder {
@@ -52,13 +54,13 @@ impl CollabsQueryRequestBuilder {
         self
     }
 
-    pub fn start_date(mut self, value: impl Into<String>) -> Self {
-        self.start_date = Some(value.into());
+    pub fn start_date(mut self, value: NaiveDate) -> Self {
+        self.start_date = Some(value);
         self
     }
 
-    pub fn end_date(mut self, value: impl Into<String>) -> Self {
-        self.end_date = Some(value.into());
+    pub fn end_date(mut self, value: NaiveDate) -> Self {
+        self.end_date = Some(value);
         self
     }
 

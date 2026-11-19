@@ -32,12 +32,14 @@ pub struct SearchMediaRequest {
     #[serde(rename = "datePreset")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub date_preset: Option<SearchMediaRequestDatePreset>,
+    /// Calendar date, YYYY-MM-DD.
     #[serde(rename = "startDate")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub start_date: Option<String>,
+    pub start_date: Option<NaiveDate>,
+    /// Calendar date, YYYY-MM-DD.
     #[serde(rename = "endDate")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub end_date: Option<String>,
+    pub end_date: Option<NaiveDate>,
     #[serde(rename = "minDaysRun")]
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
@@ -106,8 +108,8 @@ pub struct SearchMediaRequestBuilder {
     language: Option<Vec<SearchMediaRequestLanguageItem>>,
     location: Option<Vec<String>>,
     date_preset: Option<SearchMediaRequestDatePreset>,
-    start_date: Option<String>,
-    end_date: Option<String>,
+    start_date: Option<NaiveDate>,
+    end_date: Option<NaiveDate>,
     min_days_run: Option<f64>,
     max_days_run: Option<f64>,
     min_view_count: Option<f64>,
@@ -184,13 +186,13 @@ impl SearchMediaRequestBuilder {
         self
     }
 
-    pub fn start_date(mut self, value: impl Into<String>) -> Self {
-        self.start_date = Some(value.into());
+    pub fn start_date(mut self, value: NaiveDate) -> Self {
+        self.start_date = Some(value);
         self
     }
 
-    pub fn end_date(mut self, value: impl Into<String>) -> Self {
-        self.end_date = Some(value.into());
+    pub fn end_date(mut self, value: NaiveDate) -> Self {
+        self.end_date = Some(value);
         self
     }
 

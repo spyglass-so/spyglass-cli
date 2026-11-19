@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 102 types for API operations
+//! - **Request/Response Types**: 103 types for API operations
 //! - **Model Types**: 4 types for data representation
 
 pub mod brands_search_brands_request_ids_item;
@@ -25,6 +25,7 @@ pub mod creators_search_creators_response_creators_item;
 pub mod creators_search_creators_response;
 pub mod account_get_account_response;
 pub mod account_insights_account_request_type;
+pub mod account_insights_account_request_date_preset;
 pub mod account_insights_account_response_rows_type;
 pub mod account_insights_account_response_rows_rows_item;
 pub mod account_insights_account_response_rows;
@@ -132,6 +133,7 @@ pub use creators_search_creators_response_creators_item::SearchCreatorsResponseC
 pub use creators_search_creators_response::SearchCreatorsResponse;
 pub use account_get_account_response::GetAccountResponse;
 pub use account_insights_account_request_type::InsightsAccountRequestType;
+pub use account_insights_account_request_date_preset::InsightsAccountRequestDatePreset;
 pub use account_insights_account_response_rows_type::InsightsAccountResponseRowsType;
 pub use account_insights_account_response_rows_rows_item::InsightsAccountResponseRowsRowsItem;
 pub use account_insights_account_response_rows::InsightsAccountResponseRows;

@@ -67,17 +67,18 @@ impl AccountClient {
             .await
     }
 
-    /// Return clustered creative themes for an account. `MEDIA_MIX` returns a
-    /// breakdown by media type; the other types return weekly buckets plus
-    /// ranked totals, highest first.
+    /// Return creative insights for an account. `MEDIA_MIX` counts creatives by
+    /// media type, `CATEGORY` by creative category, and `FUNNEL` by funnel
+    /// stage. `HOOK`, `TARGET_PERSONA`, and `AD_ANGLE` return weekly buckets
+    /// plus ranked totals, highest first.
     ///
     /// If a hook, angle, or persona clustering run is missing, older than 30
     /// days, or has no clusters, clustering starts and the response includes
     /// `status: "analyzing"` with empty totals. Retry for the finished clusters.
     /// Analyzing responses are not charged.
     ///
-    /// `maxDaysBack` filters both the weekly bucket series and ranked
-    /// `totals` to creatives that started within the requested window.
+    /// `datePreset`, or `startDate` and `endDate` as `YYYY-MM-DD`, filter
+    /// by creative start date. Omit both for the last 30 days.
     ///
     /// Limited to 120 requests per minute per user.
     /// Costs $0.0010 per cluster returned, charged against your plan's monthly credits. The count field is what you were charged for.
@@ -85,6 +86,8 @@ impl AccountClient {
     /// # Arguments
     ///
     /// * `id` - Any one of: an account id, a website, an Instagram handle, or a TikTok handle. An id is a UUID or the numeric id from POST /brands or POST /creators. A website may be a full URL or a bare domain. A handle may start with @. Encode `/` and `?` when the value is a URL.
+    /// * `start_date` - Calendar date, YYYY-MM-DD.
+    /// * `end_date` - Calendar date, YYYY-MM-DD.
     /// * `options` - Additional request options such as headers, timeout, etc.
     ///
     /// # Returns
@@ -109,7 +112,9 @@ impl AccountClient {
     ///             &"e9cf96ee-7455-4b00-b692-80e2f923f79d".to_string(),
     ///             &InsightsQueryRequest {
     ///                 r#type: InsightsAccountRequestType::Hook,
-    ///                 max_days_back: None,
+    ///                 date_preset: None,
+    ///                 start_date: None,
+    ///                 end_date: None,
     ///                 limit: None,
     ///             },
     ///             None,
@@ -130,7 +135,9 @@ impl AccountClient {
                 None,
                 QueryBuilder::new()
                     .serialize("type", Some(request.r#type.clone()))
-                    .int("maxDaysBack", request.max_days_back.clone())
+                    .serialize("datePreset", request.date_preset.clone())
+                    .date("startDate", request.start_date.clone())
+                    .date("endDate", request.end_date.clone())
                     .int("limit", request.limit.clone())
                     .build(),
                 options,
@@ -139,8 +146,8 @@ impl AccountClient {
     }
 
     /// Return an account’s campaigns or offers, newest start date first.
-    /// `datePreset`, or `startDate` and `endDate`, filter by campaign
-    /// start date. Omit both for all time.
+    /// `datePreset`, or `startDate` and `endDate` as `YYYY-MM-DD`, filter
+    /// by campaign start date. Omit both for all time.
     ///
     /// Limited to 120 requests per minute per user.
     /// Costs $0.0010 per campaign returned, charged against your plan's monthly credits. The count field is what you were charged for.
@@ -148,6 +155,8 @@ impl AccountClient {
     /// # Arguments
     ///
     /// * `id` - Any one of: an account id, a website, an Instagram handle, or a TikTok handle. An id is a UUID or the numeric id from POST /brands or POST /creators. A website may be a full URL or a bare domain. A handle may start with @. Encode `/` and `?` when the value is a URL.
+    /// * `start_date` - Calendar date, YYYY-MM-DD.
+    /// * `end_date` - Calendar date, YYYY-MM-DD.
     /// * `options` - Additional request options such as headers, timeout, etc.
     ///
     /// # Returns
@@ -199,8 +208,8 @@ impl AccountClient {
                     .serialize("sortBy", request.sort_by.clone())
                     .int("limit", request.limit.clone())
                     .serialize("datePreset", request.date_preset.clone())
-                    .string("startDate", request.start_date.clone())
-                    .string("endDate", request.end_date.clone())
+                    .date("startDate", request.start_date.clone())
+                    .date("endDate", request.end_date.clone())
                     .build(),
                 options,
             )
@@ -212,7 +221,7 @@ impl AccountClient {
     /// mediaCount is how many of that account’s media items tag the
     /// creator. startedAt is the earliest of those media start times, and
     /// lastPostedAt is the latest. `datePreset`, or `startDate` and
-    /// `endDate`, filter by startedAt. Omit both for all time.
+    /// `endDate` as `YYYY-MM-DD`, filter by startedAt. Omit both for all time.
     ///
     /// Limited to 120 requests per minute per user.
     /// Costs $0.0010 per collab returned, charged against your plan's monthly credits. The count field is what you were charged for.
@@ -220,6 +229,8 @@ impl AccountClient {
     /// # Arguments
     ///
     /// * `id` - Any one of: an account id, a website, an Instagram handle, or a TikTok handle. An id is a UUID or the numeric id from POST /brands or POST /creators. A website may be a full URL or a bare domain. A handle may start with @. Encode `/` and `?` when the value is a URL.
+    /// * `start_date` - Calendar date, YYYY-MM-DD.
+    /// * `end_date` - Calendar date, YYYY-MM-DD.
     /// * `options` - Additional request options such as headers, timeout, etc.
     ///
     /// # Returns
@@ -265,8 +276,8 @@ impl AccountClient {
                     .int("limit", request.limit.clone())
                     .int("offset", request.offset.clone())
                     .serialize("datePreset", request.date_preset.clone())
-                    .string("startDate", request.start_date.clone())
-                    .string("endDate", request.end_date.clone())
+                    .date("startDate", request.start_date.clone())
+                    .date("endDate", request.end_date.clone())
                     .build(),
                 options,
             )
