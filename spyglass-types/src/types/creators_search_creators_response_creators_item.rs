@@ -16,6 +16,8 @@ pub struct SearchCreatorsResponseCreatorsItem {
     pub summary: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub bio: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub category: Option<String>,
     #[serde(default)]
     pub verified: bool,
     #[serde(rename = "igUsername")]
@@ -75,6 +77,7 @@ pub struct SearchCreatorsResponseCreatorsItemBuilder {
     name: Option<String>,
     summary: Option<String>,
     bio: Option<String>,
+    category: Option<String>,
     verified: Option<bool>,
     ig_username: Option<String>,
     ig_followers: Option<f64>,
@@ -118,6 +121,11 @@ impl SearchCreatorsResponseCreatorsItemBuilder {
 
     pub fn bio(mut self, value: impl Into<String>) -> Self {
         self.bio = Some(value.into());
+        self
+    }
+
+    pub fn category(mut self, value: impl Into<String>) -> Self {
+        self.category = Some(value.into());
         self
     }
 
@@ -200,6 +208,7 @@ impl SearchCreatorsResponseCreatorsItemBuilder {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
             summary: self.summary,
             bio: self.bio,
+            category: self.category,
             verified: self.verified.ok_or_else(|| BuildError::missing_field("verified"))?,
             ig_username: self.ig_username,
             ig_followers: self.ig_followers,

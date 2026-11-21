@@ -81,6 +81,10 @@ pub struct SearchMediaRequest {
     #[serde(rename = "includeTranscript")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub include_transcript: Option<bool>,
+    /// Include each post caption. Does not change the credit charge. Default false.
+    #[serde(rename = "includeCaption")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub include_caption: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub limit: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -121,6 +125,7 @@ pub struct SearchMediaRequestBuilder {
     crossposted: Option<bool>,
     sort_by: Option<SearchMediaRequestSortBy>,
     include_transcript: Option<bool>,
+    include_caption: Option<bool>,
     limit: Option<i64>,
     offset: Option<i64>,
 }
@@ -251,6 +256,11 @@ impl SearchMediaRequestBuilder {
         self
     }
 
+    pub fn include_caption(mut self, value: bool) -> Self {
+        self.include_caption = Some(value);
+        self
+    }
+
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
@@ -289,6 +299,7 @@ impl SearchMediaRequestBuilder {
             crossposted: self.crossposted,
             sort_by: self.sort_by,
             include_transcript: self.include_transcript,
+            include_caption: self.include_caption,
             limit: self.limit,
             offset: self.offset,
         })

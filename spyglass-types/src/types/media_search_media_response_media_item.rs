@@ -11,8 +11,19 @@ pub struct SearchMediaResponseMediaItem {
     pub platform_id: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub brand: Option<SearchMediaResponseMediaItemBrand>,
+    /// Landing page headline. For organic posts, the post title.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
+    /// Call to action, such as Shop now or Learn more.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub cta: Option<String>,
+    /// Landing page link for a Meta ad. Null for Instagram and TikTok posts.
+    #[serde(rename = "landingPageUrl")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub landing_page_url: Option<String>,
+    /// Where a Meta ad was shown, such as FACEBOOK, INSTAGRAM, or AUDIENCE_NETWORK. Present only on Meta ads.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub placement: Option<Vec<SearchMediaResponseMediaItemPlacementItem>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub r#type: Option<SearchMediaResponseMediaItemType>,
     #[serde(rename = "mediaType")]
@@ -102,6 +113,8 @@ pub struct SearchMediaResponseMediaItem {
     pub impressions_text: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub transcript: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub caption: Option<String>,
 }
 
 impl SearchMediaResponseMediaItem {
@@ -117,6 +130,9 @@ pub struct SearchMediaResponseMediaItemBuilder {
     platform_id: Option<String>,
     brand: Option<SearchMediaResponseMediaItemBrand>,
     title: Option<String>,
+    cta: Option<String>,
+    landing_page_url: Option<String>,
+    placement: Option<Vec<SearchMediaResponseMediaItemPlacementItem>>,
     r#type: Option<SearchMediaResponseMediaItemType>,
     media_type: Option<SearchMediaResponseMediaItemMediaType>,
     url: Option<String>,
@@ -144,6 +160,7 @@ pub struct SearchMediaResponseMediaItemBuilder {
     impression_percentile: Option<f64>,
     impressions_text: Option<String>,
     transcript: Option<String>,
+    caption: Option<String>,
 }
 
 impl SearchMediaResponseMediaItemBuilder {
@@ -164,6 +181,21 @@ impl SearchMediaResponseMediaItemBuilder {
 
     pub fn title(mut self, value: impl Into<String>) -> Self {
         self.title = Some(value.into());
+        self
+    }
+
+    pub fn cta(mut self, value: impl Into<String>) -> Self {
+        self.cta = Some(value.into());
+        self
+    }
+
+    pub fn landing_page_url(mut self, value: impl Into<String>) -> Self {
+        self.landing_page_url = Some(value.into());
+        self
+    }
+
+    pub fn placement(mut self, value: Vec<SearchMediaResponseMediaItemPlacementItem>) -> Self {
+        self.placement = Some(value);
         self
     }
 
@@ -302,6 +334,11 @@ impl SearchMediaResponseMediaItemBuilder {
         self
     }
 
+    pub fn caption(mut self, value: impl Into<String>) -> Self {
+        self.caption = Some(value.into());
+        self
+    }
+
     /// Consumes the builder and constructs a [`SearchMediaResponseMediaItem`].
     /// This method will fail if any of the following fields are not set:
     /// - [`id`](SearchMediaResponseMediaItemBuilder::id)
@@ -315,6 +352,9 @@ impl SearchMediaResponseMediaItemBuilder {
             platform_id: self.platform_id.ok_or_else(|| BuildError::missing_field("platform_id"))?,
             brand: self.brand,
             title: self.title,
+            cta: self.cta,
+            landing_page_url: self.landing_page_url,
+            placement: self.placement,
             r#type: self.r#type,
             media_type: self.media_type,
             url: self.url,
@@ -342,6 +382,7 @@ impl SearchMediaResponseMediaItemBuilder {
             impression_percentile: self.impression_percentile,
             impressions_text: self.impressions_text,
             transcript: self.transcript,
+            caption: self.caption,
         })
     }
 }

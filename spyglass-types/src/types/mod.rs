@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 103 types for API operations
+//! - **Request/Response Types**: 106 types for API operations
 //! - **Model Types**: 4 types for data representation
 
 pub mod brands_search_brands_request_ids_item;
@@ -16,6 +16,7 @@ pub mod brands_search_brands_response_brands_item;
 pub mod brands_search_brands_response;
 pub mod creators_search_creators_request_ids_item;
 pub mod creators_search_creators_request_sort_by;
+pub mod creators_search_creators_request_category_item;
 pub mod creators_search_creators_request_ethnicity;
 pub mod creators_search_creators_request_gender;
 pub mod creators_search_creators_request_age_range;
@@ -51,6 +52,7 @@ pub mod account_posts_account_request_include_transcript;
 pub mod account_posts_account_request_sort_by;
 pub mod account_posts_account_response_media_item_brand_type;
 pub mod account_posts_account_response_media_item_brand;
+pub mod account_posts_account_response_media_item_placement_item;
 pub mod account_posts_account_response_media_item_type;
 pub mod account_posts_account_response_media_item_media_type;
 pub mod account_posts_account_response_media_item_ugc_character_age_range;
@@ -77,6 +79,7 @@ pub mod media_search_media_request_landing_page_match;
 pub mod media_search_media_request_sort_by;
 pub mod media_search_media_response_media_item_brand_type;
 pub mod media_search_media_response_media_item_brand;
+pub mod media_search_media_response_media_item_placement_item;
 pub mod media_search_media_response_media_item_type;
 pub mod media_search_media_response_media_item_media_type;
 pub mod media_search_media_response_media_item_ugc_character_age_range;
@@ -124,6 +127,7 @@ pub use brands_search_brands_response_brands_item::SearchBrandsResponseBrandsIte
 pub use brands_search_brands_response::SearchBrandsResponse;
 pub use creators_search_creators_request_ids_item::SearchCreatorsRequestIdsItem;
 pub use creators_search_creators_request_sort_by::SearchCreatorsRequestSortBy;
+pub use creators_search_creators_request_category_item::SearchCreatorsRequestCategoryItem;
 pub use creators_search_creators_request_ethnicity::SearchCreatorsRequestEthnicity;
 pub use creators_search_creators_request_gender::SearchCreatorsRequestGender;
 pub use creators_search_creators_request_age_range::SearchCreatorsRequestAgeRange;
@@ -159,6 +163,7 @@ pub use account_posts_account_request_include_transcript::PostsAccountRequestInc
 pub use account_posts_account_request_sort_by::PostsAccountRequestSortBy;
 pub use account_posts_account_response_media_item_brand_type::PostsAccountResponseMediaItemBrandType;
 pub use account_posts_account_response_media_item_brand::PostsAccountResponseMediaItemBrand;
+pub use account_posts_account_response_media_item_placement_item::PostsAccountResponseMediaItemPlacementItem;
 pub use account_posts_account_response_media_item_type::PostsAccountResponseMediaItemType;
 pub use account_posts_account_response_media_item_media_type::PostsAccountResponseMediaItemMediaType;
 pub use account_posts_account_response_media_item_ugc_character_age_range::PostsAccountResponseMediaItemUgcCharacterAgeRange;
@@ -185,6 +190,7 @@ pub use media_search_media_request_landing_page_match::SearchMediaRequestLanding
 pub use media_search_media_request_sort_by::SearchMediaRequestSortBy;
 pub use media_search_media_response_media_item_brand_type::SearchMediaResponseMediaItemBrandType;
 pub use media_search_media_response_media_item_brand::SearchMediaResponseMediaItemBrand;
+pub use media_search_media_response_media_item_placement_item::SearchMediaResponseMediaItemPlacementItem;
 pub use media_search_media_response_media_item_type::SearchMediaResponseMediaItemType;
 pub use media_search_media_response_media_item_media_type::SearchMediaResponseMediaItemMediaType;
 pub use media_search_media_response_media_item_ugc_character_age_range::SearchMediaResponseMediaItemUgcCharacterAgeRange;

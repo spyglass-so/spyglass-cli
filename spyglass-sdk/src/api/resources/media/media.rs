@@ -13,16 +13,39 @@ impl MediaClient {
         })
     }
 
-    /// Return creatives. Pass `accountId` to scope to one brand or creator,
-    /// or omit it to search the whole corpus. Without `accountId`,
-    /// `query` is required. A call typically takes under 10 seconds.
-    /// Set `includeTranscript` to true to include each video transcript.
-    /// That does not change the credit charge. The default is false.
+    /// Return media posts. A call usually takes under 10 seconds.
     ///
-    /// Limited to 120 requests per minute per user.
+    /// **1. Pick what to search**
+    ///
+    /// | You want | Send |
+    /// | --- | --- |
+    /// | All media | Send neither `accountId` nor `query` to list media across the index, ordered by `sortBy` |
+    /// | One account's media | `accountId` |
+    /// | Media matching a description | `query`, which matches posts by what they show or say |
+    /// | One account's media matching a description | `accountId` and `query` |
+    /// | A broader category | `taxonomy`, a path from GET /taxonomies |
+    ///
+    /// **2. Pick a sort order**
+    ///
+    /// `sortBy` defaults to `MOST_RECENT`. Some orders only work with certain channels:
+    ///
+    /// | `sortBy` | Allowed `channel` |
+    /// | --- | --- |
+    /// | `MOST_RECENT`, `OLDEST` | Any |
+    /// | `MOST_IMPRESSIONS`, `LONGEST_RUN` | Exactly `META_AD` |
+    /// | `MOST_VIEWS`, `MOST_LIKES`, `MOST_COMMENTS`, `HIGHEST_ENGAGEMENT`, `HIGHEST_OUTLIER` | Anything except `META_AD` |
+    ///
+    /// **3. Optionally add a transcript or caption**
+    ///
+    /// Send `includeTranscript: true` to get each video transcript.
+    /// Send `includeCaption: true` to get each post caption.
+    /// Both default to false and do not change the price.
+    ///
+    /// **Cost and limits**
+    ///
     /// Costs $0.0010 per creative returned, charged against your plan's monthly credits. The count field is what you were charged for.
-    /// The call bills a minimum of one row even when nothing matches. In that
-    /// case `count` is 0 but you are charged for one row.
+    /// You are always charged for at least one row. If nothing matches, `count` is 0 but you pay for one row.
+    /// Limited to 120 requests per minute per user.
     ///
     /// # Arguments
     ///

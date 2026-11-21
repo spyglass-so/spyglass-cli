@@ -14,42 +14,29 @@ impl BrandsClient {
     }
 
     /// Find brands.
-    /// Search semantically with `query`, or look them up by name, id, or
-    /// social handle. Either way, you can also narrow the results with
-    /// filters such as product taxonomy, location, and follower count.
+    /// Filter by taxonomy, location, or followers.
     ///
-    /// Send one search field. Each field is its own mode:
+    /// Leave the search fields empty to list by `sortBy` (default `MOST_FOLLOWERS`).
+    /// Or pass one of:
     ///
-    /// - **Query** (`query`). A natural-language brief. Runs a language model and
-    /// ranks by relevance, so `sortBy` is ignored. Bills at least one row even
-    /// when nothing matches.
-    /// - **Name** (`names`). Fuzzy-matches account names (a case-insensitive contains
-    /// match). Pass every name in one array.
-    /// - **ID** (`ids`). Looks up UUIDs, Instagram handles, TikTok handles, website
-    /// domains, or Facebook Ad Library ids. A leading `@` is ignored. Missing ids are omitted and listed
-    /// in `unmatchedIds`. `limit` and `offset` are ignored.
-    /// - **Instagram** (`igUsername`). Case-insensitive contains match on the
-    /// handle. A leading `@` is ignored.
-    /// - **TikTok** (`tiktokUsername`). Same match on the TikTok handle.
+    /// - `query` — semantic search. Ordered by relevance, so `sortBy` is ignored.
+    /// Bills at least one row even when nothing matches.
+    /// - `names` — name contains this text.
+    /// - `ids` — UUID, handle, domain, or Ad Library id. Misses are in
+    /// `unmatchedIds`. Ignores `limit` and `offset`.
+    /// - `igUsername` or `tiktokUsername` — handle contains this text. A leading
+    /// `@` is ignored.
     ///
-    /// If a request includes more than one of these fields, only the highest
-    /// priority field is used. The rest are ignored:
+    /// When more than one is set:
     ///
-    /// 1. `ids`
-    /// 2. `igUsername` or `tiktokUsername` (if both are set, either handle can match)
-    /// 3. `names`
-    /// 4. `query`
+    /// `ids` > `igUsername` / `tiktokUsername` > `names` > `query`
     ///
-    /// One exception: `query` together with `names` uses both. `names` narrows the
-    /// set, and `query` ranks inside it.
+    /// `names` + `query` uses both.
     ///
-    /// `limit` (default 20, max 100) caps the rows returned, and the cost, for
-    /// every mode except ID.
+    /// `limit` is 20 by default, 100 max, and caps the charge except for `ids`.
     ///
     /// Limited to 120 requests per minute per user.
     /// Costs $0.0010 per brand returned, charged against your plan's monthly credits. The count field is what you were charged for.
-    /// A `query` search runs a language model, so it bills a minimum of one
-    /// row even when nothing matches.
     ///
     /// # Arguments
     ///

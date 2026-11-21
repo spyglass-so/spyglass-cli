@@ -44,6 +44,11 @@ pub struct SearchBrandsResponseBrandsItem {
     #[serde(default)]
     #[serde(with = "crate::core::number_serializers::option")]
     pub ig_engagement_rate: Option<f64>,
+    #[serde(rename = "igMedianViews")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
+    pub ig_median_views: Option<f64>,
     #[serde(rename = "tiktokUsername")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tiktok_username: Option<String>,
@@ -52,6 +57,16 @@ pub struct SearchBrandsResponseBrandsItem {
     #[serde(default)]
     #[serde(with = "crate::core::number_serializers::option")]
     pub tiktok_followers: Option<f64>,
+    #[serde(rename = "tiktokMedianViews")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
+    pub tiktok_median_views: Option<f64>,
+    #[serde(rename = "activeAdCount")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
+    pub active_ad_count: Option<f64>,
     #[serde(rename = "thumbnailUrl")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub thumbnail_url: Option<String>,
@@ -81,8 +96,11 @@ pub struct SearchBrandsResponseBrandsItemBuilder {
     ig_username: Option<String>,
     ig_followers: Option<f64>,
     ig_engagement_rate: Option<f64>,
+    ig_median_views: Option<f64>,
     tiktok_username: Option<String>,
     tiktok_followers: Option<f64>,
+    tiktok_median_views: Option<f64>,
+    active_ad_count: Option<f64>,
     thumbnail_url: Option<String>,
 }
 
@@ -162,6 +180,11 @@ impl SearchBrandsResponseBrandsItemBuilder {
         self
     }
 
+    pub fn ig_median_views(mut self, value: f64) -> Self {
+        self.ig_median_views = Some(value);
+        self
+    }
+
     pub fn tiktok_username(mut self, value: impl Into<String>) -> Self {
         self.tiktok_username = Some(value.into());
         self
@@ -169,6 +192,16 @@ impl SearchBrandsResponseBrandsItemBuilder {
 
     pub fn tiktok_followers(mut self, value: f64) -> Self {
         self.tiktok_followers = Some(value);
+        self
+    }
+
+    pub fn tiktok_median_views(mut self, value: f64) -> Self {
+        self.tiktok_median_views = Some(value);
+        self
+    }
+
+    pub fn active_ad_count(mut self, value: f64) -> Self {
+        self.active_ad_count = Some(value);
         self
     }
 
@@ -200,8 +233,11 @@ impl SearchBrandsResponseBrandsItemBuilder {
             ig_username: self.ig_username,
             ig_followers: self.ig_followers,
             ig_engagement_rate: self.ig_engagement_rate,
+            ig_median_views: self.ig_median_views,
             tiktok_username: self.tiktok_username,
             tiktok_followers: self.tiktok_followers,
+            tiktok_median_views: self.tiktok_median_views,
+            active_ad_count: self.active_ad_count,
             thumbnail_url: self.thumbnail_url,
         })
     }

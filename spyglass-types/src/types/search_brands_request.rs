@@ -31,6 +31,28 @@ pub struct SearchBrandsRequest {
     pub offset: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub limit: Option<i64>,
+    #[serde(rename = "minViews")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub min_views: Option<i64>,
+    #[serde(rename = "maxViews")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub max_views: Option<i64>,
+    #[serde(rename = "minEngagement")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
+    pub min_engagement: Option<f64>,
+    #[serde(rename = "maxEngagement")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
+    pub max_engagement: Option<f64>,
+    #[serde(rename = "minActiveAds")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub min_active_ads: Option<i64>,
+    #[serde(rename = "maxActiveAds")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub max_active_ads: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub taxonomy: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -57,6 +79,12 @@ pub struct SearchBrandsRequestBuilder {
     sort_by: Option<SearchBrandsRequestSortBy>,
     offset: Option<i64>,
     limit: Option<i64>,
+    min_views: Option<i64>,
+    max_views: Option<i64>,
+    min_engagement: Option<f64>,
+    max_engagement: Option<f64>,
+    min_active_ads: Option<i64>,
+    max_active_ads: Option<i64>,
     taxonomy: Option<Vec<String>>,
     language: Option<SearchBrandsRequestLanguage>,
 }
@@ -117,6 +145,36 @@ impl SearchBrandsRequestBuilder {
         self
     }
 
+    pub fn min_views(mut self, value: i64) -> Self {
+        self.min_views = Some(value);
+        self
+    }
+
+    pub fn max_views(mut self, value: i64) -> Self {
+        self.max_views = Some(value);
+        self
+    }
+
+    pub fn min_engagement(mut self, value: f64) -> Self {
+        self.min_engagement = Some(value);
+        self
+    }
+
+    pub fn max_engagement(mut self, value: f64) -> Self {
+        self.max_engagement = Some(value);
+        self
+    }
+
+    pub fn min_active_ads(mut self, value: i64) -> Self {
+        self.min_active_ads = Some(value);
+        self
+    }
+
+    pub fn max_active_ads(mut self, value: i64) -> Self {
+        self.max_active_ads = Some(value);
+        self
+    }
+
     pub fn taxonomy(mut self, value: Vec<String>) -> Self {
         self.taxonomy = Some(value);
         self
@@ -141,6 +199,12 @@ impl SearchBrandsRequestBuilder {
             sort_by: self.sort_by,
             offset: self.offset,
             limit: self.limit,
+            min_views: self.min_views,
+            max_views: self.max_views,
+            min_engagement: self.min_engagement,
+            max_engagement: self.max_engagement,
+            min_active_ads: self.min_active_ads,
+            max_active_ads: self.max_active_ads,
             taxonomy: self.taxonomy,
             language: self.language,
         })
